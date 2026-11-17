@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7eee7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Ciocia w Żłobku">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Ciocia w Żłobku</title>
+<style>
+:root{--bg:#fbf7f2;--card:#fff;--ink:#3d3834;--muted:#81766e;--peach:#f3d8c8;--rose:#d98978;--sage:#dce8dc;--lav:#e9e2f2;--line:#eee5dd}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:calc(84px + env(safe-area-inset-bottom))}
+header{padding:calc(20px + env(safe-area-inset-top)) 20px 18px;background:linear-gradient(135deg,#f5dfd2,#f4e9df)}
+header .eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#8b6559;font-weight:700}
+h1{font-size:27px;margin:6px 0 5px;letter-spacing:-.5px}header p{margin:0;color:#765f55;font-size:14px}
+main{padding:16px;max-width:760px;margin:auto}.screen{display:none}.screen.active{display:block}
+h2{font-size:21px;margin:8px 0 14px}h3{font-size:16px;margin:0 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:13px;box-shadow:0 3px 12px #61452a08}
+.hero{background:var(--sage)}.small{font-size:13px;color:var(--muted);line-height:1.45}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.tile{border-radius:16px;padding:14px;background:#fff;border:1px solid var(--line);min-height:95px;text-align:left;color:var(--ink);font:inherit}
+.tile b{display:block;margin:7px 0 3px}.emoji{font-size:24px}
+button,.tab{cursor:pointer}button{border:0}
+.primary{background:var(--rose);color:white;border-radius:12px;padding:11px 14px;font-weight:650}
+.soft{background:#f7ece5;color:#76584d;border-radius:11px;padding:9px 12px;font-weight:600}
+input,textarea,select{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font:inherit;margin:5px 0 10px}
+textarea{min-height:100px;resize:vertical}.item{padding:12px 0;border-bottom:1px solid var(--line)}.item:last-child{border:0}
+.tag{display:inline-block;background:#f5e8df;color:#805d50;border-radius:20px;padding:4px 9px;font-size:11px;margin:0 4px 6px 0}
+.check{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line)}.check input{width:19px;height:19px;margin:2px 0;accent-color:var(--rose)}
+nav{position:fixed;bottom:0;left:0;right:0;background:#fffdfb;border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px calc(8px + env(safe-area-inset-bottom));z-index:4}
+nav button{background:none;color:#8a7d74;font-size:10px;min-width:55px;padding:4px 2px}nav button span{display:block;font-size:20px;margin-bottom:3px}nav button.active{color:#b96f60;font-weight:700}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.toolbar button.active{background:var(--rose);color:#fff}
+.empty{color:var(--muted);font-size:14px;padding:12px 0}
+footer{text-align:center;color:#a2968d;font-size:11px;padding:12px}
+@media(min-width:600px){main{padding:24px}.grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">Twój codzienny pomocnik</div><h1>🌷 Ciocia w Żłobku</h1><p>Pomysły, plan i inspiracje dla maluchów 1–3 lata</p></header>
+<main>
+<section id="home" class="screen active">
+ <div class="card hero"><div class="tag">Na dobry początek</div><h2 style="margin-top:4px">Małe kroki, wielka radość 💛</h2><p class="small">Wybierz inspirację na dziś albo zajrzyj do planu dnia. Pamiętaj: w żłobku najważniejsza jest relacja, bezpieczeństwo i swobodna zabawa.</p></div>
+ <div class="grid">
+  <button class="tile" onclick="show('plan')"><span class="emoji">🗓️</span><b>Plan dnia</b><span class="small">Ułóż rytm dnia i odhacz zadania</span></button>
+  <button class="tile" onclick="show('games')"><span class="emoji">🎨</span><b>Baza zabaw</b><span class="small">Szybkie pomysły i scenariusze</span></button>
+  <button class="tile" onclick="show('calendar')"><span class="emoji">🎈</span><b>Kalendarz</b><span class="small">Święta i dni tematyczne</span></button>
+  <button class="tile" onclick="show('rhymes')"><span class="emoji">🎵</span><b>Rymowanki</b><span class="small">Słowa, rytm i gesty</span></button>
+  <button class="tile" onclick="show('notes')"><span class="emoji">📝</span><b>Moje notatki</b><span class="small">Zapisuj pomysły i obserwacje</span></button>
+  <button class="tile" onclick="show('help')"><span class="emoji">💡</span><b>Wskazówki</b><span class="small">Bezpieczna zabawa z maluchami</span></button>
+ </div>
+ <div class="card" style="margin-top:14px"><h3>Pomysł na 5 minut</h3><p id="dailyIdea">Kolorowe ślady — pokaż dzieciom duże kawałki materiału w różnych kolorach. Nazywajcie barwy, machajcie nimi i chowajcie za plecami.</p><button class="soft" onclick="newIdea()">Losuj inny pomysł ↻</button></div>
+</section>
+
+<section id="plan" class="screen">
+ <h2>🗓️ Plan dnia</h2><p class="small">Przykładowy rytm — dostosuj go do zasad i potrzeb swojej grupy.</p>
+ <div class="card"><label class="small">Data</label><input type="date" id="planDate"><div id="tasks"></div><button class="soft" onclick="resetTasks()">Odznacz wszystkie</button></div>
+ <div class="card"><h3>Notatka na dziś</h3><textarea id="dayNote" placeholder="Co się sprawdziło? Co przygotować na jutro?"></textarea><button class="primary" onclick="saveDay()">Zapisz notatkę</button><span id="saveMsg" class="small"></span></div>
+</section>
+
+<section id="games" class="screen">
+ <h2>🎨 Baza zabaw</h2><input id="search" placeholder="Szukaj zabawy…" oninput="renderGames()">
+ <div class="toolbar" id="filters"></div><div id="gameList"></div>
+</section>
+
+<section id="calendar" class="screen">
+ <h2>🎈 Kalendarz inspiracji</h2><p class="small">Daty i tematy możesz potraktować elastycznie — nie trzeba obchodzić każdego dnia.</p><div id="calendarList"></div>
+</section>
+
+<section id="rhymes" class="screen">
+ <h2>🎵 Rymowanki i zabawy paluszkowe</h2><div id="rhymeList"></div>
+</section>
+
+<section id="notes" class="screen">
+ <h2>📝 Moje notatki</h2><div class="card"><label class="small">Tytuł</label><input id="noteTitle" placeholder="Np. Pomysły na jesień"><label class="small">Treść</label><textarea id="noteText" placeholder="Zapisz pomysł…"></textarea><button class="primary" onclick="addNote()">Zapisz notatkę</button></div><div id="notesList"></div>
+</section>
+
+<section id="help" class="screen">
+ <h2>💡 Bezpieczna zabawa 1–3 lata</h2>
+ <div class="card"><h3>O czym pamiętać?</h3><ul class="small" style="line-height:1.8;padding-left:20px"><li>Wybieraj duże, trwałe materiały bez małych odłączanych elementów.</li><li>Unikaj koralików, guzików, pomponów, magnesów, baterii guzikowych i małych nakrętek.</li><li>Woda, masy sensoryczne i materiały sypkie wymagają stałego nadzoru dorosłego; uwzględnij alergie i zasady placówki.</li><li>Nie zostawiaj dzieci samych z balonami ani ich fragmentami.</li><li>Nie zmuszaj do udziału — obserwowanie też jest formą uczestnictwa.</li><li>Dostosuj ruch, dźwięk i czas trwania do wieku, możliwości i samopoczucia dzieci.</li></ul></div>
+ <div class="card"><h3>Jak zapisać aplikację na iPhonie?</h3><p class="small">Po umieszczeniu aplikacji pod prywatnym adresem HTTPS otwórz ją w Safari, dotknij przycisku Udostępnij, wybierz „Dodaj do ekranu początkowego”, a następnie „Dodaj”.</p></div>
+</section>
+<footer>Twoja prywatna przestrzeń inspiracji • dane notatek pozostają w pamięci przeglądarki</footer>
+</main>
+<nav>
+ <button class="active" data-screen="home" onclick="show('home')"><span>🏡</span>Start</button>
+ <button data-screen="plan" onclick="show('plan')"><span>🗓️</span>Plan</button>
+ <button data-screen="games" onclick="show('games')"><span>🎨</span>Zabawy</button>
+ <button data-screen="calendar" onclick="show('calendar')"><span>🎈</span>Kalendarz</button>
+ <button data-screen="rhymes" onclick="show('rhymes')"><span>🎵</span>Rymowanki</button>
+ <button data-screen="notes" onclick="show('notes')"><span>📝</span>Notatki</button>
+</nav>
+<script>
+const tasksBase=['Powitanie i swobodna zabawa','Krąg powitalny / piosenka','Śniadanie i czynności higieniczne','Zabawa ruchowa','Zajęcia tematyczne / sensoryczne','Pobyt na świeżym powietrzu','Obiad i wyciszenie','Odpoczynek / leżakowanie','Podwieczorek i zabawy popołudniowe'];
+let checked=JSON.parse(localStorage.getItem('cz_checked')||'{}'), activeFilter='Wszystkie';
+const games=[
+{n:'Kolorowe chustki',c:'Ruch',t:'5–10 min',m:'Duże, lekkie chustki lub kawałki materiału.',d:'Rozdaj dzieciom po jednej dużej chustce. Machajcie wysoko i nisko, chowajcie ją za plecami, podrzucajcie delikatnie i nazywajcie kolory. Dzieci mogą też tylko obserwować.',a:'Młodszym pokaż jeden ruch naraz. Starsze mogą wybierać kolor lub naśladować gest.'},
+{n:'Co słychać?',c:'Muzyka',t:'5 min',m:'Grzechotka lub bezpieczny instrument dla maluchów.',d:'Usiądźcie w kręgu. Wydaj krótki, łagodny dźwięk i zrób pauzę. Zachęć dzieci do nasłuchiwania, naśladowania głosem lub ruchem.',a:'Nie używaj głośnych dźwięków przy uchu dziecka.'},
+{n:'Pudełko faktur',c:'Sensoryka',t:'10 min',m:'Duże kawałki bawełny, polaru i gładkiej tkaniny.',d:'Włóż duże próbki tkanin do pudełka. Wyjmujcie je po kolei, dotykajcie i opisujcie: miękkie, gładkie, puszyste. Zostań przy dzieciach przez cały czas.',a:'Używaj wyłącznie dużych, niezmechaconych kawałków bez luźnych nitek.'},
+{n:'Taniec-stop',c:'Ruch',t:'5–8 min',m:'Krótka piosenka.',d:'Włącz spokojną piosenkę i poruszajcie się w jej rytmie. Zatrzymaj muzykę i pokaż gest „stop”. Powtórz kilka razy, bez eliminowania dzieci.',a:'Dostosuj tempo i przestrzeń; usuń przeszkody.'},
+{n:'Malowanie wodą',c:'Plastyka',t:'10 min',m:'Duży pędzel, woda, ciemna tablica lub chodnik na zewnątrz.',d:'Pokaż, jak pędzlem malować wodą duże ślady. Dzieci mogą robić kreski i plamy, obserwując jak znikają.',a:'Nadzoruj wodę, zabezpiecz podłogę i używaj dużych pędzli bez odpadających części.'},
+{n:'Echo zwierząt',c:'Muzyka',t:'5 min',m:'Obrazki dużych zwierząt lub pluszaki odpowiednie dla wieku.',d:'Pokaż zwierzę i zaproponuj jego odgłos: „muuu”, „hau”, „miau”. Dzieci mogą powtarzać, wskazywać obrazek lub poruszać się jak zwierzę.',a:'Wybieraj duże, trwałe obrazki i zabawki.'},
+{n:'Tunel z koca',c:'Ruch',t:'5–10 min',m:'Stabilny tunel sensoryczny lub koc rozpięty bezpiecznie przez dorosłych.',d:'Zaproś dzieci do przejścia przez stabilny tunel. Dorosły pozostaje przy wejściu i wyjściu. Można też przejść obok lub zajrzeć do środka.',a:'Nie twórz konstrukcji, która może się przewrócić lub opaść na dziecko.'},
+{n:'Wielkie bazgroty',c:'Plastyka',t:'10 min',m:'Duży arkusz papieru, grube kredki przeznaczone dla małych dzieci.',d:'Przyklej papier do stołu lub podłogi. Zaproponuj rysowanie dużych linii i kropek. Nie oceniaj efektu — nazwij ruch i kolory.',a:'Kredki muszą być nietoksyczne, odpowiednie do wieku i używane pod nadzorem.'},
+{n:'Naśladuj minę',c:'Emocje',t:'3–5 min',m:'Lustro nietłukące lub własna twarz.',d:'Pokaż radosną, zdziwioną i spokojną minę. Nazwij emocję i zaproś do naśladowania. Dzieci mogą wskazywać obrazek emocji.',a:'Nie wymagaj od dziecka konkretnej reakcji.'},
+{n:'Spacer po liniach',c:'Ruch',t:'5 min',m:'Szeroka taśma papierowa przyklejona płasko do podłogi.',d:'Ułóż prostą, szeroką ścieżkę z taśmy. Zachęć do przejścia obok niej lub wzdłuż niej, z asekuracją dorosłego.',a:'Taśma musi leżeć płasko i nie może być śliska ani odstawać.'},
+{n:'Co ukrył kocyk?',c:'Bez przygotowania',t:'3–5 min',m:'Duży kocyk i duża zabawka.',d:'Pokaż zabawkę, przykryj ją kocykiem i zapytaj „gdzie jest?”. Odsłoń ją powoli. Pozwól dzieciom kolejno odkrywać.',a:'Nie przykrywaj twarzy dziecka; używaj lekkiego kocyka.'},
+{n:'Wędrująca piłka',c:'Bez przygotowania',t:'5 min',m:'Duża, miękka piłka.',d:'Usiądźcie na podłodze w niewielkim kręgu. Turlaj piłkę do dziecka, nazywając jego imię. Dziecko może odesłać ją lub tylko dotknąć.',a:'Piłka powinna być zbyt duża do połknięcia i odpowiednia dla wieku.'}
+];
+const calendar=[['Styczeń','Nowy Rok • Zima • Dzień Kubusia Puchatka (18 stycznia)'],['Luty','Dzień Pizzy (9 lutego) • Walentynki (14 lutego) • Dzień Kota (17 lutego)'],['Marzec','Dzień Pisarzy (3 marca) • Dzień Wody (22 marca) • Pierwszy dzień wiosny'],['Kwiecień','Prima Aprilis • Dzień Ziemi (22 kwietnia) • Wielkanoc — data ruchoma'],['Maj','Dzień Strażaka (4 maja) • Dzień Mamy (26 maja) • Łąka i kwiaty'],['Czerwiec','Dzień Dziecka (1 czerwca) • Dzień Ojca (23 czerwca) • Lato'],['Lipiec','Lato • Wakacyjne podróże • Woda i bezpieczeństwo'],['Sierpień','Owoce lata • Kolory • Pożegnanie wakacji'],['Wrzesień','Powitanie jesieni • Dzień Przedszkolaka (20 września)'],['Październik','Dzień Drzewa (10 października) • Jesienne liście'],['Listopad','Dzień Postaci z Bajek (5 listopada) • Jeże i las'],['Grudzień','Mikołajki (6 grudnia) • Zima • Boże Narodzenie']];
+const rhymes=[
+['Rączki klaszczą','Klaszczą rączki: raz i dwa,\\nteraz każdy rączki ma.\\nMacham w górę, macham w bok,\\ robię mały wielki skok!','Klaszczcie, machajcie i wykonajcie delikatny przysiad.'],
+['Idzie miś','Idzie miś, tup, tup, tup,\\do przodu robi jeden ruch.\\\\Siada cicho pośród nas,\\odpoczywa miś już czas.','Naśladujcie powolny chód i siadanie.'],
+['Paluszki','Ten paluszek to jest tata,\\ten paluszek to jest mama.\\Tu jest dziecko, a tu brat,\\a tu cała rodzina!','Dotykaj kolejno paluszków dziecka tylko wtedy, gdy to lubi; można pokazywać na własnej dłoni.']
+];
+function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('active',x.id===id));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.screen===id));window.scrollTo(0,0)}
+function renderTasks(){document.getElementById('tasks').innerHTML=tasksBase.map((t,i)=>`<label class="check"><input type="checkbox" ${checked[i]?'checked':''} onchange="toggleTask(${i},this.checked)"><span>${t}</span></label>`).join('')}
+function toggleTask(i,v){checked[i]=v;localStorage.setItem('cz_checked',JSON.stringify(checked))}
+function resetTasks(){checked={};localStorage.setItem('cz_checked','{}');renderTasks()}
+function saveDay(){localStorage.setItem('cz_day_'+document.getElementById('planDate').value,document.getElementById('dayNote').value);document.getElementById('saveMsg').textContent=' Zapisano ✓'}
+function renderGames(){let q=(document.getElementById('search').value||'').toLowerCase();let cats=['Wszystkie',...new Set(games.map(x=>x.c))];document.getElementById('filters').innerHTML=cats.map(c=>`<button class="soft ${activeFilter===c?'active':''}" onclick="activeFilter='${c}';renderGames()">${c}</button>`).join('');let list=games.filter(g=>(activeFilter==='Wszystkie'||g.c===activeFilter)&&(g.n+' '+g.m+' '+g.d).toLowerCase().includes(q));document.getElementById('gameList').innerHTML=list.map(g=>`<div class="card"><span class="tag">${g.c}</span><span class="tag">${g.t}</span><h3>${g.n}</h3><p class="small"><b>Materiały:</b> ${g.m}</p><p>${g.d}</p><p class="small"><b>Dostosowanie i bezpieczeństwo:</b> ${g.a}</p></div>`).join('')||'<p class="empty">Nie znaleziono zabaw.</p>'}
+function renderCalendar(){document.getElementById('calendarList').innerHTML=calendar.map(x=>`<div class="item"><h3>${x[0]}</h3><p class="small">${x[1]}</p></div>`).join('')}
+function renderRhymes(){document.getElementById('rhymeList').innerHTML=rhymes.map(r=>`<div class="card"><h3>${r[0]}</h3><p style="white-space:pre-line;line-height:1.7">${r[1].replaceAll('\\\\','\\')}</p><p class="small">${r[2]}</p></div>`).join('')}
+function addNote(){let t=document.getElementById('noteTitle').value.trim(),v=document.getElementById('noteText').value.trim();if(!t&&!v)return;let a=JSON.parse(localStorage.getItem('cz_notes')||'[]');a.unshift({t:t||'Notatka',v,date:new Date().toLocaleDateString('pl-PL')});localStorage.setItem('cz_notes',JSON.stringify(a));document.getElementById('noteTitle').value='';document.getElementById('noteText').value='';renderNotes()}
+function renderNotes(){let a=JSON.parse(localStorage.getItem('cz_notes')||'[]');document.getElementById('notesList').innerHTML=a.map((n,i)=>`<div class="card"><span class="small">${n.date}</span><h3>${esc(n.t)}</h3><p style="white-space:pre-line">${esc(n.v)}</p><button class="soft" onclick="delNote(${i})">Usuń</button></div>`).join('')||'<p class="empty">Nie masz jeszcze notatek.</p>'}
+function delNote(i){let a=JSON.parse(localStorage.getItem('cz_notes')||'[]');a.splice(i,1);localStorage.setItem('cz_notes',JSON.stringify(a));renderNotes()}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+const ideas=['Kolorowe ślady — pokaż duże kawałki materiału w różnych kolorach. Machajcie nimi i nazywajcie barwy.','Turlamy piłkę — usiądźcie naprzeciwko siebie i powoli turlajcie dużą, miękką piłkę.','Mały koncert — wystukujcie rytm dłońmi o uda i róbcie pauzy na nasłuchiwanie.','Lustro min — pokazuj spokojne miny i nazywaj emocje.','Papierowe fale — poruszajcie dużym arkuszem papieru, słuchając szelestu.'];
+function newIdea(){document.getElementById('dailyIdea').textContent=ideas[Math.floor(Math.random()*ideas.length)]}
+document.getElementById('planDate').value=new Date().toISOString().slice(0,10);
+document.getElementById('dayNote').value=localStorage.getItem('cz_day_'+document.getElementById('planDate').value)||'';
+renderTasks();renderGames();renderCalendar();renderRhymes();renderNotes();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
